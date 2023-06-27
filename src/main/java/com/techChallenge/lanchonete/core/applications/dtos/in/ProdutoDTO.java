@@ -1,26 +1,35 @@
-package com.techChallenge.lanchonete.core.domain;
+package com.techChallenge.lanchonete.core.applications.dtos.in;
 
 import com.techChallenge.lanchonete.core.domain.Enum.CategoriaProduto;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-public class Produto {
-
+public class ProdutoDTO {
 
     private Long id;
+    @NotEmpty
+    @Size(min = 2 , max = 50,message = "O nome do Produto nao pode conter menos q 2 caracteres e no maximo 50")
     private String nomeProduto;
 
     private CategoriaProduto categoria;
 
+    @NotEmpty
+    @Size(max = 150,message = "A Descrição do Produto não pode ser maior que 150 caracteres")
     private String descricaoProduto;
 
+    @NotNull
+    @Digits(integer=6, fraction=2,message = "Formato de preço aceito 000000.00 (no maximo 6 inteiros e 2 casas fracionarias")
     private Float preco;
 
     private String imagen;
 
 
-    public Produto() {
+    public ProdutoDTO() {
     }
 
-    public Produto(Long id, String nomeProduto, CategoriaProduto categoria, String descricaoProduto, Float preco, String imagen) {
+    public ProdutoDTO(Long id, String nomeProduto, CategoriaProduto categoria, String descricaoProduto, @NotNull Float preco, String imagen) {
         this.id = id;
         this.nomeProduto = nomeProduto;
         this.categoria = categoria;
