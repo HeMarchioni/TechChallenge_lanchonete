@@ -5,7 +5,6 @@ import com.techChallenge.lanchonete.core.applications.mapper.ClienteMapper;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.ClienteServicePort;
 import com.techChallenge.lanchonete.core.applications.ports.repositories.ClienteRepositoryPort;
 import com.techChallenge.lanchonete.core.domain.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,40 +13,41 @@ import java.util.stream.Collectors;
 @Service
 public class ClienteService implements ClienteServicePort {
 
-    private final ClienteMapper clienteMapper = ClienteMapper.INSTANCE;
-    private final ClienteRepositoryPort clienteRepository;
 
-    @Autowired
-    public ClienteService(ClienteRepositoryPort clienteRepository) {
+    private final ClienteRepositoryPort clienteRepositoryPort;
+    private final ClienteMapper clienteMapper;
 
-        this.clienteRepository = clienteRepository;
+    public ClienteService(ClienteRepositoryPort clienteRepositoryPort) {
+        this.clienteRepositoryPort = clienteRepositoryPort;
+        this.clienteMapper = ClienteMapper.INSTANCE;
     }
+
 
     @Override
     public ClienteDTO create(ClienteDTO clienteDTO) {
         Cliente cliente = clienteMapper.toModel(clienteDTO);
-        clienteRepository.save(cliente);
+        clienteRepositoryPort.save(cliente);
         return clienteDTO;
     }
 
     @Override
     public ClienteDTO findById(Long id) {
-        Cliente cliente = clienteRepository.findById(id);
+        Cliente cliente = clienteRepositoryPort.findById(id);
         return clienteMapper.toDTO(cliente);
     }
 
     @Override
     public List<ClienteDTO> findAll() {
-        List<Cliente> clientes = clienteRepository.findAll();
+        List<Cliente> clientes = clienteRepositoryPort.findAll();
         return clientes.stream().map(clienteMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public boolean update(ClienteDTO clienteDTO) {
 
-        if (clienteRepository.existsById(clienteDTO.getId())) {
+        if (clienteRepositoryPort.existsById(clienteDTO.getId())) {
             Cliente cliente = clienteMapper.toModel(clienteDTO);
-            clienteRepository.save(cliente);
+            clienteRepositoryPort.save(cliente);
             return true;
         }
         return false;
@@ -55,8 +55,8 @@ public class ClienteService implements ClienteServicePort {
 
     @Override
     public boolean delete(Long id) {
-        if (clienteRepository.existsById(id)) {
-            clienteRepository.deleteById(id);
+        if (clienteRepositoryPort.existsById(id)) {
+            clienteRepositoryPort.deleteById(id);
             return true;
         }
         return false;

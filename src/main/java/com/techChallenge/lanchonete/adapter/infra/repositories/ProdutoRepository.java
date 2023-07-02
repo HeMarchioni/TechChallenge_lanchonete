@@ -4,23 +4,22 @@ import com.techChallenge.lanchonete.adapter.infra.entity.ProdutoEntity;
 import com.techChallenge.lanchonete.core.applications.mapper.ProdutoMapper;
 import com.techChallenge.lanchonete.core.applications.ports.repositories.ProdutoRepositoryPort;
 import com.techChallenge.lanchonete.core.domain.Produto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProdutoRepository implements ProdutoRepositoryPort {
 
-    private final ProdutoMapper produtoMapper = ProdutoMapper.INSTANCE;
     private final ProdutoRepositoryJpa produtoRepositoryJpa;
+    private final ProdutoMapper produtoMapper = ProdutoMapper.INSTANCE;
 
-    @Autowired
-    public ProdutoRepository( ProdutoRepositoryJpa produtoRepositoryJpa) {
-        this.produtoRepositoryJpa = produtoRepositoryJpa;
-    }
 
     @Override
     public void save(Produto produto) {

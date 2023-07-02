@@ -5,24 +5,23 @@ import com.techChallenge.lanchonete.adapter.infra.entity.ClienteEntity;
 import com.techChallenge.lanchonete.core.applications.mapper.ClienteMapper;
 import com.techChallenge.lanchonete.core.applications.ports.repositories.ClienteRepositoryPort;
 import com.techChallenge.lanchonete.core.domain.Cliente;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ClienteRepository implements ClienteRepositoryPort {
 
 
-    private final ClienteMapper clienteMapper = ClienteMapper.INSTANCE;
     private final ClienteRepositoryJpa clienteRepositoryJpa;
+    private final ClienteMapper clienteMapper= ClienteMapper.INSTANCE;
 
-    @Autowired
-    public ClienteRepository(ClienteRepositoryJpa clienteRepositoryJpa) {
-        this.clienteRepositoryJpa = clienteRepositoryJpa;
-    }
 
     @Override
     public void save(Cliente cliente) {

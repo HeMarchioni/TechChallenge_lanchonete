@@ -5,7 +5,6 @@ import com.techChallenge.lanchonete.core.applications.mapper.ProdutoMapper;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.ProdutoServicePort;
 import com.techChallenge.lanchonete.core.applications.ports.repositories.ProdutoRepositoryPort;
 import com.techChallenge.lanchonete.core.domain.Produto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +13,14 @@ import java.util.stream.Collectors;
 @Service
 public class ProdutoService implements ProdutoServicePort {
 
-    private final ProdutoMapper produtoMapper = ProdutoMapper.INSTANCE;
     private final ProdutoRepositoryPort produtoRepository;
+    private final ProdutoMapper produtoMapper;
 
-    @Autowired
     public ProdutoService(ProdutoRepositoryPort produtoRepository) {
-
         this.produtoRepository = produtoRepository;
+        this.produtoMapper = ProdutoMapper.INSTANCE;
     }
+
 
     @Override
     public ProdutoDTO create(ProdutoDTO produtoDTO) {
