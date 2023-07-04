@@ -1,4 +1,4 @@
-package com.techChallenge.lanchonete.core.domain.Enum;
+package com.techChallenge.lanchonete.core.applications.Enum;
 
 public enum CategoriaProduto {
     LANCHE("Lanche"),

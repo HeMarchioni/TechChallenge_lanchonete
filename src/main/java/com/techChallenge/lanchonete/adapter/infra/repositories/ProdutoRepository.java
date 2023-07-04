@@ -6,7 +6,6 @@ import com.techChallenge.lanchonete.core.applications.ports.repositories.Produto
 import com.techChallenge.lanchonete.core.domain.Produto;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

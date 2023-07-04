@@ -1,6 +1,6 @@
 package com.techChallenge.lanchonete.core.applications.dtos.in;
 
-import com.techChallenge.lanchonete.core.domain.Enum.CategoriaProduto;
+import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

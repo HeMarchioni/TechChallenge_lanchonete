@@ -1,6 +1,6 @@
 package com.techChallenge.lanchonete.adapter.infra.entity;
 
-import com.techChallenge.lanchonete.core.domain.Enum.CategoriaProduto;
+import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

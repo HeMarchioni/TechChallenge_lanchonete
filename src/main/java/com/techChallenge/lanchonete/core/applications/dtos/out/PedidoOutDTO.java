@@ -1,24 +1,27 @@
-package com.techChallenge.lanchonete.core.domain;
+package com.techChallenge.lanchonete.core.applications.dtos.out;
 
 import com.techChallenge.lanchonete.core.applications.Enum.StatusPedido;
+import com.techChallenge.lanchonete.core.applications.dtos.in.ProdutoDTO;
+import com.techChallenge.lanchonete.core.domain.Cliente;
+import com.techChallenge.lanchonete.core.domain.Produto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Pedido {
+public class PedidoOutDTO {
 
     private Long id;
     private Cliente cliente;
-    private List<Produto> listaProduto;
+    private List<ProdutoDTO> listaProduto;
     private String observacao;
     private StatusPedido statusPedido;
     private LocalDateTime dataPedido;
 
-    public Pedido() {
+
+    public PedidoOutDTO() {
     }
 
-
-    public Pedido(Long id, Cliente cliente, List<Produto> listaProduto, String observacao, StatusPedido statusPedido, LocalDateTime dataPedido) {
+    public PedidoOutDTO(Long id, Cliente cliente, List<ProdutoDTO> listaProduto, String observacao, StatusPedido statusPedido, LocalDateTime dataPedido) {
         this.id = id;
         this.cliente = cliente;
         this.listaProduto = listaProduto;
@@ -43,11 +46,11 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public List<Produto> getListaProduto() {
+    public List<ProdutoDTO> getListaProduto() {
         return listaProduto;
     }
 
-    public void setListaProduto(List<Produto> listaProduto) {
+    public void setListaProduto(List<ProdutoDTO> listaProduto) {
         this.listaProduto = listaProduto;
     }
 

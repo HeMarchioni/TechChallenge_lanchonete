@@ -1,6 +1,6 @@
 package com.techChallenge.lanchonete.core.domain;
 
-import com.techChallenge.lanchonete.core.domain.Enum.CategoriaProduto;
+import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
 
 public class Produto {
 
