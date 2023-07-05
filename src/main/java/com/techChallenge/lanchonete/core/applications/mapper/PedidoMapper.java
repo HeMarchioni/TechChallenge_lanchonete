@@ -16,10 +16,8 @@ import java.util.stream.Collectors;
 @Mapper
 public interface PedidoMapper {
 
-
     PedidoMapper INSTANCE = Mappers.getMapper(PedidoMapper.class);
 
-    @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(source = "cliente", target = "cliente.id")
     @Mapping(target = "listaProduto", source = "listaProduto", qualifiedByName = "mapListaProdutoIds")
     Pedido toModel(PedidoDTO pedidoDTO);
@@ -32,7 +30,6 @@ public interface PedidoMapper {
 
     @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
     Pedido toModel(PedidoEntity clienteEntity);
-
 
 
 

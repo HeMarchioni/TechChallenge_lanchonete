@@ -3,6 +3,7 @@ package com.techChallenge.lanchonete.core.applications.Enum;
 public enum StatusPedido {
 
 
+    AGUARDANDO_PAGAMENTO("Aguardando Pagamento"),
     RECEBIDO("Recebido"),
     PREPARACAO("Preparacao"),
     PRONTO("Pronto"),
