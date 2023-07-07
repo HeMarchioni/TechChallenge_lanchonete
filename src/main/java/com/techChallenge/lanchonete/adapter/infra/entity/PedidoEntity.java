@@ -38,5 +38,8 @@ public class PedidoEntity extends AbstractEntity{
     @Column(name = "dt_Pedido",nullable = false, length = 20)
     private LocalDateTime dataPedido;
 
+    @Column (name = "vl_total",nullable = false)
+    private Float valorTotal;
+
 
 }

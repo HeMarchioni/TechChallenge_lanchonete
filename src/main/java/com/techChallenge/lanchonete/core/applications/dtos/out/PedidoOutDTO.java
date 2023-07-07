@@ -3,7 +3,6 @@ package com.techChallenge.lanchonete.core.applications.dtos.out;
 import com.techChallenge.lanchonete.core.applications.Enum.StatusPedido;
 import com.techChallenge.lanchonete.core.applications.dtos.in.ProdutoDTO;
 import com.techChallenge.lanchonete.core.domain.Cliente;
-import com.techChallenge.lanchonete.core.domain.Produto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,18 +15,20 @@ public class PedidoOutDTO {
     private String observacao;
     private StatusPedido statusPedido;
     private LocalDateTime dataPedido;
+    private Float valorTotal;
 
 
     public PedidoOutDTO() {
     }
 
-    public PedidoOutDTO(Long id, Cliente cliente, List<ProdutoDTO> listaProduto, String observacao, StatusPedido statusPedido, LocalDateTime dataPedido) {
+    public PedidoOutDTO(Long id, Cliente cliente, List<ProdutoDTO> listaProduto, String observacao, StatusPedido statusPedido, LocalDateTime dataPedido, Float valorTotal) {
         this.id = id;
         this.cliente = cliente;
         this.listaProduto = listaProduto;
         this.observacao = observacao;
         this.statusPedido = statusPedido;
         this.dataPedido = dataPedido;
+        this.valorTotal = valorTotal;
     }
 
     public Long getId() {
@@ -76,5 +77,13 @@ public class PedidoOutDTO {
 
     public void setDataPedido(LocalDateTime dataPedido) {
         this.dataPedido = dataPedido;
+    }
+
+    public Float getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Float valorTotal) {
+        this.valorTotal = valorTotal;
     }
 }

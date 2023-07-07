@@ -20,6 +20,7 @@ public interface PedidoMapper {
 
     @Mapping(source = "cliente", target = "cliente.id")
     @Mapping(target = "listaProduto", source = "listaProduto", qualifiedByName = "mapListaProdutoIds")
+    @Mapping(target = "id" , ignore = true)
     Pedido toModel(PedidoDTO pedidoDTO);
 
     @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
@@ -43,6 +44,5 @@ public interface PedidoMapper {
                 })
                 .collect(Collectors.toList());
     }
-
 
 }

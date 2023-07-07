@@ -21,9 +21,11 @@ public class PedidoService implements PedidoServicePort {
 
     private final PedidoRepositoryPort pedidoRepositoryPort;
     private final PedidoMapper pedidoMapper;
+    private final ProdutoService produtoService;
 
-    public PedidoService(PedidoRepositoryPort pedidoRepositoryPort) {
+    public PedidoService(PedidoRepositoryPort pedidoRepositoryPort, ProdutoService produtoService) {
         this.pedidoRepositoryPort = pedidoRepositoryPort;
+        this.produtoService = produtoService;
         this.pedidoMapper = PedidoMapper.INSTANCE;
     }
 
@@ -32,7 +34,10 @@ public class PedidoService implements PedidoServicePort {
         Pedido pedido = pedidoMapper.toModel(pedidoDTO);
         pedido.setDataPedido(getHoraDataAtual());
         pedido.setStatusPedido(StatusPedido.AGUARDANDO_PAGAMENTO);
+        if (pedido.getCliente().getId() == null) pedido.setCliente(null);
+        calcularValorTotal(pedido);
         pedidoRepositoryPort.save(pedido);
+        // continuar enviar solicitação de QR code
         return pedidoDTO;
     }
 
@@ -70,13 +75,18 @@ public class PedidoService implements PedidoServicePort {
         return false;
     }
 
-
-
     public LocalDateTime getHoraDataAtual() {
         final ZoneId ZONE_ID = ZoneId.of("America/Sao_Paulo");
         final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return LocalDateTime.parse(LocalDateTime.now(ZONE_ID).format(FORMATTER), FORMATTER);
+    }
+
+    public void calcularValorTotal(Pedido pedido) {
+        double soma = pedido.getListaProduto().stream()
+                .mapToDouble(produto -> produtoService.findById(produto.getId()).getPreco())
+                .sum();
+        pedido.setValorTotal((float) soma);
     }
 
 
