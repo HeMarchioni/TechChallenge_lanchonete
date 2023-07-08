@@ -14,6 +14,8 @@ public interface ProdutoMapper {
 
     @Mapping(target = "id" , ignore = true)
     Produto toModel(ProdutoDTO produtoDTO);
+
+    Produto toModelInterno(ProdutoDTO produtoDTO);
     ProdutoEntity toEntity(Produto produto);
     ProdutoDTO toDTO(Produto produto);
     Produto toModel(ProdutoEntity produtoEntity);

@@ -14,6 +14,8 @@ public interface ClienteMapper {
 
     @Mapping(target = "id" , ignore = true)
     Cliente toModel(ClienteDTO clienteDTO);
+
+    Cliente toModelInterno(ClienteDTO clienteDTO);
     ClienteEntity toEntity(Cliente cliente);
     ClienteDTO toDTO(Cliente cliente);
     Cliente toModel(ClienteEntity clienteEntity);

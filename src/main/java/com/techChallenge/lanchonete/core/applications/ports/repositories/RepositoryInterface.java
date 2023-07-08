@@ -2,9 +2,9 @@ package com.techChallenge.lanchonete.core.applications.ports.repositories;
 
 import java.util.List;
 
-public interface RepositoryInterface <Obj,Long>  {
+public interface RepositoryInterface <Obj,Long,ObjEntity>  {
 
-    void save(Obj obj);
+    ObjEntity save(Obj obj);
     Obj findById(Long id);
     List<Obj> findAll();
     boolean existsById(Long id);

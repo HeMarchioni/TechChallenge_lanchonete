@@ -7,7 +7,6 @@ import com.techChallenge.lanchonete.core.applications.ports.repositories.Cliente
 import com.techChallenge.lanchonete.core.domain.Cliente;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,9 +23,10 @@ public class ClienteRepository implements ClienteRepositoryPort {
 
 
     @Override
-    public void save(Cliente cliente) {
+    public ClienteEntity save(Cliente cliente) {
         ClienteEntity clienteEntity = clienteMapper.toEntity(cliente);
         clienteRepositoryJpa.save(clienteEntity);
+        return clienteEntity;
     }
 
     @Override

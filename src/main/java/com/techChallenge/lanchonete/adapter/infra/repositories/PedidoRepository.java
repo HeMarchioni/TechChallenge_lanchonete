@@ -22,9 +22,10 @@ public class PedidoRepository implements PedidoRepositoryPort {
 
 
     @Override
-    public void save(Pedido pedido) {
+    public PedidoEntity save(Pedido pedido) {
         PedidoEntity pedidoEntity = pedidoMapper.toEntity(pedido);
         pedidoRepositoryJpa.save(pedidoEntity);
+        return pedidoEntity;
     }
 
     @Override

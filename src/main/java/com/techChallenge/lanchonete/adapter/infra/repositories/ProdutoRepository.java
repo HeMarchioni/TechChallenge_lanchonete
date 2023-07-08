@@ -21,9 +21,10 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
 
     @Override
-    public void save(Produto produto) {
+    public ProdutoEntity save(Produto produto) {
         ProdutoEntity produtoEntity = produtoMapper.toEntity(produto);
         produtoRepositoryJpa.save(produtoEntity);
+        return produtoEntity;
     }
 
     @Override

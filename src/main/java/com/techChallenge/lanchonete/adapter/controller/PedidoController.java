@@ -41,9 +41,9 @@ public class PedidoController implements ControllerInterface<PedidoDTO, PedidoOu
 
     @Override
     @PostMapping("/create")
-    public ResponseEntity<PedidoDTO>  post(@Valid @RequestBody PedidoDTO pedidoDTO) {
-        pedidoServicePort.create(pedidoDTO);
-        return ResponseEntity.ok(pedidoDTO);
+    public ResponseEntity<PedidoOutDTO>  post(@Valid @RequestBody PedidoDTO pedidoDTO) {
+        PedidoOutDTO pedidoOutDTO = pedidoServicePort.create(pedidoDTO);
+        return ResponseEntity.ok(pedidoOutDTO);
     }
 
     @Override

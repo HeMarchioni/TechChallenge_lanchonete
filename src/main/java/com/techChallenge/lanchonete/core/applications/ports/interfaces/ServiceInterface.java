@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ServiceInterface<in,out> {
 
-    in create(in obj);
+    out create(in obj);
     out findById(Long id);
     List<out> findAll();
     boolean update(in obj);

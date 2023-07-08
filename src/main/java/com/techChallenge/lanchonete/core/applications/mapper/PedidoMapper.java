@@ -24,13 +24,16 @@ public interface PedidoMapper {
     Pedido toModel(PedidoDTO pedidoDTO);
 
     @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    PedidoEntity toEntity(Pedido cliente);
+    PedidoEntity toEntity(Pedido pedido);
 
     @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    PedidoOutDTO toOutDTO(Pedido cliente);
+    PedidoOutDTO toOutDTO(Pedido pedido);
 
     @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    Pedido toModel(PedidoEntity clienteEntity);
+    PedidoOutDTO toOutDTO(PedidoEntity pedidoEntity);
+
+    @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    Pedido toModel(PedidoEntity pedidoEntity);
 
 
 
