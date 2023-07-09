@@ -14,12 +14,13 @@ public class Pedido {
     private StatusPedido statusPedido;
     private LocalDateTime dataPedido;
     private Float valorTotal;
+    private String informacoesPagamento;
 
     public Pedido() {
     }
 
 
-    public Pedido(Long id, Cliente cliente, List<Produto> listaProduto, String observacao, StatusPedido statusPedido, LocalDateTime dataPedido, Float valorTotal) {
+    public Pedido(Long id, Cliente cliente, List<Produto> listaProduto, String observacao, StatusPedido statusPedido, LocalDateTime dataPedido, Float valorTotal, String informacoesPagamento) {
         this.id = id;
         this.cliente = cliente;
         this.listaProduto = listaProduto;
@@ -27,6 +28,7 @@ public class Pedido {
         this.statusPedido = statusPedido;
         this.dataPedido = dataPedido;
         this.valorTotal = valorTotal;
+        this.informacoesPagamento = informacoesPagamento;
     }
 
     public Long getId() {
@@ -82,5 +84,13 @@ public class Pedido {
     }
     public void setValorTotal(Float valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public String getInformacoesPagamento() {
+        return informacoesPagamento;
+    }
+
+    public void setInformacoesPagamento(String informacoesPagamento) {
+        this.informacoesPagamento = informacoesPagamento;
     }
 }

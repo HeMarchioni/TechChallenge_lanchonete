@@ -35,7 +35,11 @@ public interface PedidoMapper {
     @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
     Pedido toModel(PedidoEntity pedidoEntity);
 
+    @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    List<Pedido> toModelList(List<PedidoEntity> pedidos);
 
+    @Mapping(target = "dataPedido", source = "dataPedido", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    List<PedidoOutDTO> toOutDTOList(List<Pedido> pedidos);
 
     @Named("mapListaProdutoIds")
     default List<Produto> mapListaProdutoIds(List<Long> listaProdutoIds) {
@@ -47,5 +51,7 @@ public interface PedidoMapper {
                 })
                 .collect(Collectors.toList());
     }
+
+
 
 }

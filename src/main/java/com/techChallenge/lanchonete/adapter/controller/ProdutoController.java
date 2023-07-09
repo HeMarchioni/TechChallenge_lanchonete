@@ -1,5 +1,6 @@
 package com.techChallenge.lanchonete.adapter.controller;
 
+import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
 import com.techChallenge.lanchonete.core.applications.dtos.in.ProdutoDTO;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.ProdutoServicePort;
 import jakarta.validation.Valid;
@@ -36,6 +37,26 @@ public class ProdutoController implements ControllerInterface<ProdutoDTO, Produt
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
     }
+
+    @GetMapping("categoria/{categoria}")
+    public ResponseEntity<List<ProdutoDTO>> get(@PathVariable("categoria")String categoria) {
+
+        CategoriaProduto categoriaProduto;
+
+        try {
+            categoriaProduto = CategoriaProduto.valueOf(categoria.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        List<ProdutoDTO> produtos = produtoServicePort.buscarPorCategoria(categoriaProduto);
+
+        if (produtos.isEmpty()) return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(produtos);
+
+    }
+
 
     @Override
     @PostMapping("/create")

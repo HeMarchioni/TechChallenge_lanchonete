@@ -41,5 +41,7 @@ public class PedidoEntity extends AbstractEntity{
     @Column (name = "vl_total",nullable = false)
     private Float valorTotal;
 
+    @Column(name = "ds_pagamento", columnDefinition = "text" ,length = 300)
+    private String informacoesPagamento;
 
 }

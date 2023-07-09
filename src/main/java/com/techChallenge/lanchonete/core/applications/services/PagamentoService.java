@@ -3,6 +3,7 @@ package com.techChallenge.lanchonete.core.applications.services;
 
 import com.techChallenge.lanchonete.core.applications.dtos.in.PagamentoQRCodeRequestDTO;
 import com.techChallenge.lanchonete.core.applications.ports.gateways.ApiMetodoPagamentoPort;
+import com.techChallenge.lanchonete.core.applications.ports.interfaces.PagamentoServicePort;
 import com.techChallenge.lanchonete.core.domain.Pedido;
 import com.techChallenge.lanchonete.core.domain.Produto;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,27 +13,28 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Service
-public class PagamentoService {
+public class PagamentoService  implements PagamentoServicePort {
 
 
-    private final ApiMetodoPagamentoPort apiMetodoPagamentoPort;
-
-    @Value("${mercado.pago.api.url}")
-    private String urlParaNotificacaoPagamento;
+    private final ApiMetodoPagamentoPort<PagamentoQRCodeRequestDTO> apiMetodoPagamentoPort;
+    private final String urlParaNotificacaoPagamento;
 
 
-    public PagamentoService(ApiMetodoPagamentoPort apiMetodoPagamentoPort) {
+
+    public PagamentoService(ApiMetodoPagamentoPort<PagamentoQRCodeRequestDTO> apiMetodoPagamentoPort, @Value("${endpoint.comfirmacao.pagamento}") String urlParaNotificacaoPagamento) {
         this.apiMetodoPagamentoPort = apiMetodoPagamentoPort;
+        this.urlParaNotificacaoPagamento = urlParaNotificacaoPagamento;
+
     }
 
 
 
-    public String gerarQrCodeMercadoPago(Pedido pedido) throws IOException {
+    public void gerarQrCodeMercadoPago(Pedido pedido) throws IOException {
 
         PagamentoQRCodeRequestDTO pagamentoQRCodeRequestDTO = preencherPagamentoQRcodeRequest(pedido);
 
-
-        return apiMetodoPagamentoPort.fazerRequisicaoMercadoPago(pagamentoQRCodeRequestDTO);
+        String infoPagamento = apiMetodoPagamentoPort.fazerRequisicaoMercadoPago(pagamentoQRCodeRequestDTO);
+        pedido.setInformacoesPagamento(infoPagamento);
 
     }
 
@@ -53,5 +55,6 @@ public class PagamentoService {
         return pagamentoQRCodeRequestDTO;
 
     }
+
 
 }

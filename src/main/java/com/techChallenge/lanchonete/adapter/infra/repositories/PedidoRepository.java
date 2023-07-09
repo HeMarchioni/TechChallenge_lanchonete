@@ -1,6 +1,7 @@
 package com.techChallenge.lanchonete.adapter.infra.repositories;
 
 import com.techChallenge.lanchonete.adapter.infra.entity.PedidoEntity;
+import com.techChallenge.lanchonete.core.applications.Enum.StatusPedido;
 import com.techChallenge.lanchonete.core.applications.mapper.PedidoMapper;
 import com.techChallenge.lanchonete.core.applications.ports.repositories.PedidoRepositoryPort;
 import com.techChallenge.lanchonete.core.domain.Pedido;
@@ -48,5 +49,10 @@ public class PedidoRepository implements PedidoRepositoryPort {
     @Override
     public void deleteById(Long id) {
         pedidoRepositoryJpa.deleteById(id);
+    }
+
+    @Override
+    public List<Pedido> findPedidoByStatus(StatusPedido statusPedido) {
+        return pedidoMapper.toModelList(pedidoRepositoryJpa.findPedidoByStatus(statusPedido));
     }
 }

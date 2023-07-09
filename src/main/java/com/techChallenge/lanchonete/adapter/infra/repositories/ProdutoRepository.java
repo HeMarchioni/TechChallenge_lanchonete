@@ -1,6 +1,7 @@
 package com.techChallenge.lanchonete.adapter.infra.repositories;
 
 import com.techChallenge.lanchonete.adapter.infra.entity.ProdutoEntity;
+import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
 import com.techChallenge.lanchonete.core.applications.mapper.ProdutoMapper;
 import com.techChallenge.lanchonete.core.applications.ports.repositories.ProdutoRepositoryPort;
 import com.techChallenge.lanchonete.core.domain.Produto;
@@ -47,5 +48,10 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     @Override
     public void deleteById(Long id) {
         produtoRepositoryJpa.deleteById(id);
+    }
+
+    @Override
+    public List<Produto> findProdutoByCategoria(CategoriaProduto categoriaProduto) {
+        return produtoMapper.toModelListEntity(produtoRepositoryJpa.findProdutoByCategoria(categoriaProduto));
     }
 }
