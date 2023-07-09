@@ -26,12 +26,6 @@ public class PedidoDTO {
     public PedidoDTO() {
     }
 
-    public PedidoDTO(Long id, Long cliente, List<Long> listaProduto, String observacao) {
-        this.id = id;
-        this.cliente = cliente;
-        this.listaProduto = listaProduto;
-        this.observacao = observacao;
-    }
 
     public Long getId() {
         return id;

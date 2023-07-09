@@ -29,14 +29,6 @@ public class ProdutoDTO {
     public ProdutoDTO() {
     }
 
-    public ProdutoDTO(Long id, String nomeProduto, CategoriaProduto categoria, String descricaoProduto, @NotNull Float preco, String imagen) {
-        this.id = id;
-        this.nomeProduto = nomeProduto;
-        this.categoria = categoria;
-        this.descricaoProduto = descricaoProduto;
-        this.preco = preco;
-        this.imagen = imagen;
-    }
 
     public Long getId() {
         return id;

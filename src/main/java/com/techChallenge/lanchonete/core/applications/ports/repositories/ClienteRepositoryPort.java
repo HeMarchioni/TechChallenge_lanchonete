@@ -8,5 +8,11 @@ import com.techChallenge.lanchonete.core.domain.Cliente;
 public interface ClienteRepositoryPort extends RepositoryInterface<Cliente, Long,ClienteEntity> {
 
 
+    Cliente findClienteByDs_Email(String email);
+
+    Cliente findClienteByCd_Cpf(String cpf);
+
+
+
 
 }

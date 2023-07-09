@@ -50,4 +50,15 @@ public class ClienteRepository implements ClienteRepositoryPort {
     public void deleteById(Long id) {
         clienteRepositoryJpa.deleteById(id);
     }
+
+    public Cliente findClienteByDs_Email(String email){
+        ClienteEntity clienteEntity = clienteRepositoryJpa.findClienteByDs_Email(email);
+        return clienteMapper.toModel(clienteEntity);
+    }
+
+    public Cliente findClienteByCd_Cpf(String cpf){
+        ClienteEntity clienteEntity = clienteRepositoryJpa.findClienteByCd_Cpf(cpf);
+        return clienteMapper.toModel(clienteEntity);
+    }
+
 }

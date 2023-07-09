@@ -118,7 +118,14 @@ public class PedidoService implements PedidoServicePort {
 
     @Override
     public boolean delete(Long id) {
-        if (pedidoRepositoryPort.existsById(id)) {
+
+        Pedido pedidoDoBanco = pedidoRepositoryPort.findById(id);
+
+        if (pedidoDoBanco != null) {
+
+            if(!StatusPedido.AGUARDANDO_PAGAMENTO.equals(pedidoDoBanco.getStatusPedido()) && !StatusPedido.FINALIZADO.equals(pedidoDoBanco.getStatusPedido()))
+                throw new IllegalStateException("Pedido somente pode ser excluido se Ainda estiver AGUARDANDO_PAGAMENTO ou Foi FINALIZADO");
+
             pedidoRepositoryPort.deleteById(id);
             return true;
         }

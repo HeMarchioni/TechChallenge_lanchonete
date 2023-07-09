@@ -1,5 +1,6 @@
 package com.techChallenge.lanchonete.adapter.controller;
 
+import com.techChallenge.lanchonete.core.applications.dtos.in.BuscaCpfEmailDTO;
 import com.techChallenge.lanchonete.core.applications.dtos.in.ClienteDTO;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.ClienteServicePort;
 import jakarta.validation.Valid;
@@ -69,6 +70,22 @@ public class ClienteController implements ControllerInterface<ClienteDTO, Client
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+
+    @PostMapping("/busca/cpf/email")
+    public ResponseEntity<?> buscaPorCpfOuEmail(@Valid @RequestBody BuscaCpfEmailDTO buscaCpfEmailDTO) {
+
+        try {
+            ClienteDTO clienteDTO = clienteServicePort.findByCpfEmail(buscaCpfEmailDTO);
+
+            if (clienteDTO != null)
+                return ResponseEntity.ok(clienteDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cpf ou Email informado não encontrado");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
+        }
     }
 
 }

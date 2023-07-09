@@ -68,12 +68,20 @@ public class PedidoController implements ControllerInterface<PedidoDTO, PedidoOu
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")Long id) {
-        if (pedidoServicePort.delete(id)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
 
+        try {
+            if (pedidoServicePort.delete(id)) {
+                return ResponseEntity.ok().body("Pedido id:"+id+" Apagado com Sucesso");
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido com id:"+id+" não encontrado");  //-> id nao encontrado (reposta 404)
+        }
+        catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro conflito de regra!!  "+ e.getMessage()); // -> erro de conflito, (409)
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
+        }
+    }
 
     @GetMapping("status/{status}")
     public ResponseEntity<List<PedidoOutDTO>> get(@PathVariable("status")String status) {

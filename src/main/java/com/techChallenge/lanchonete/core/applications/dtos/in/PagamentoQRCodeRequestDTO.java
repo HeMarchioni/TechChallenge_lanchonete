@@ -15,16 +15,6 @@ public class PagamentoQRCodeRequestDTO {
     public PagamentoQRCodeRequestDTO() {
     }
 
-    public PagamentoQRCodeRequestDTO(String external_reference, Double transaction_amount, String description, String notification_url, String payment_method_id, String payer, String binary_mode, String currency_id) {
-        this.external_reference = external_reference;
-        this.transaction_amount = transaction_amount;
-        this.description = description;
-        this.notification_url = notification_url;
-        this.payment_method_id = payment_method_id;
-        this.payer = payer;
-        this.binary_mode = binary_mode;
-        this.currency_id = currency_id;
-    }
 
     public String getExternal_reference() {
         return external_reference;
