@@ -15,5 +15,9 @@ public interface PedidoServicePort extends ServiceInterface<PedidoDTO, PedidoOut
 
     List<PedidoOutDTO> buscarPorStatus(StatusPedido statusPedido);
 
+    boolean alteraStatusPedidoPronto (Long id);
+
+    boolean alteraStatusPedidoFinalizado (Long id);
+
 
 }

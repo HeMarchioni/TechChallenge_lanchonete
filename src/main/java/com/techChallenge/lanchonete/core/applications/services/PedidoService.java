@@ -1,7 +1,6 @@
 package com.techChallenge.lanchonete.core.applications.services;
 
 import com.google.gson.Gson;
-import com.techChallenge.lanchonete.adapter.infra.entity.PedidoEntity;
 import com.techChallenge.lanchonete.core.applications.Enum.StatusPedido;
 import com.techChallenge.lanchonete.core.applications.dtos.in.ConfirmacaoPagamentoDTO;
 import com.techChallenge.lanchonete.core.applications.dtos.in.PedidoDTO;
@@ -154,11 +153,37 @@ public class PedidoService implements PedidoServicePort {
 
     public boolean alteraStatusPedidoPronto (Long id){
 
+        Pedido pedidoDoBanco = pedidoRepositoryPort.findById(id);
+        if (pedidoDoBanco != null) {
 
+            if ( StatusPedido.AGUARDANDO_PAGAMENTO.equals(pedidoDoBanco.getStatusPedido()) || StatusPedido.FINALIZADO.equals(pedidoDoBanco.getStatusPedido())    ){
+                throw new IllegalStateException("Status do Pedido não pode ser alterado para PRONTO se o mesmo Ainda estiver AGUARDANDO_PAGAMENTO ou ja foi FINALIZADO");
+            }
+
+            pedidoDoBanco.setStatusPedido(StatusPedido.PRONTO);
+            pedidoRepositoryPort.save(pedidoDoBanco);
+            rotinaVerificacaoStatusPreparacao();
+            // Possivel LOG ou sistema de monitoramento. Webhooks para informar a tela pedido Pronto.
+            return true;
+        }
         return false;
     }
 
+    public boolean alteraStatusPedidoFinalizado (Long id){
 
+        Pedido pedidoDoBanco = pedidoRepositoryPort.findById(id);
+        if (pedidoDoBanco != null) {
+
+            if (!StatusPedido.PRONTO.equals(pedidoDoBanco.getStatusPedido())){
+                throw new IllegalStateException("Status do Pedido não pode ser alterado para FINALIZADO se o mesmo Ainda não estiver com Status de PRONTO");
+            }
+
+            pedidoDoBanco.setStatusPedido(StatusPedido.FINALIZADO);
+            pedidoRepositoryPort.save(pedidoDoBanco);
+            return true;
+        }
+        return false;
+    }
 
     private void rotinaVerificacaoStatusPreparacao(){
 

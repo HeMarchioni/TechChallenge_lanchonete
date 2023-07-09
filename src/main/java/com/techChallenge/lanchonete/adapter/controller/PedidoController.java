@@ -1,5 +1,6 @@
 package com.techChallenge.lanchonete.adapter.controller;
 
+import com.techChallenge.lanchonete.core.applications.Enum.StatusPedido;
 import com.techChallenge.lanchonete.core.applications.dtos.in.PedidoDTO;
 import com.techChallenge.lanchonete.core.applications.dtos.out.PedidoOutDTO;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.PedidoServicePort;
@@ -56,6 +57,9 @@ public class PedidoController implements ControllerInterface<PedidoDTO, PedidoOu
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  //-> id nao encontrado (reposta 404)
         }
+        catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro conflito de regra!!  "+ e.getMessage()); // -> erro de conflito, (409)
+        }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
         }
@@ -69,5 +73,63 @@ public class PedidoController implements ControllerInterface<PedidoDTO, PedidoOu
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+
+    @GetMapping("status/{status}")
+    public ResponseEntity<List<PedidoOutDTO>> get(@PathVariable("status")String status) {
+
+        StatusPedido statusPedido;
+
+        try {
+            statusPedido = StatusPedido.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        List<PedidoOutDTO> produtos = pedidoServicePort.buscarPorStatus(statusPedido);
+
+        if (produtos.isEmpty()) return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(produtos);
+
+    }
+
+    @PutMapping("pronto/{id}")
+    public ResponseEntity<?> pedidoPronto(@PathVariable("id")Long id) {
+
+        try {
+            if (pedidoServicePort.alteraStatusPedidoPronto(id)) {
+                return ResponseEntity.ok().body("Pedido id:"+id+" Alterado para Pronto com Sucesso");
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido com id:"+id+" não encontrado");  //-> id nao encontrado (reposta 404)
+        }
+        catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro conflito de regra!!  "+ e.getMessage()); // -> erro de conflito, (409)
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
+        }
+
+    }
+
+    @PutMapping("finalizado/{id}")
+    public ResponseEntity<?> pedidoFinalizado(@PathVariable("id")Long id) {
+
+        try {
+            if (pedidoServicePort.alteraStatusPedidoFinalizado(id)) {
+                return ResponseEntity.ok().body("Pedido id:"+id+" Alterado para Finalizado com Sucesso");
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido com id:"+id+" não encontrado");  //-> id nao encontrado (reposta 404)
+        }
+        catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro conflito de regra!!  "+ e.getMessage()); // -> erro de conflito, (409)
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
+        }
+
+    }
+
+
 
 }
