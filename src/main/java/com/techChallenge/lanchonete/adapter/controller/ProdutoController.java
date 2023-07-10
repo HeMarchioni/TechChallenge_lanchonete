@@ -2,6 +2,7 @@ package com.techChallenge.lanchonete.adapter.controller;
 
 import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
 import com.techChallenge.lanchonete.core.applications.dtos.in.ProdutoDTO;
+import com.techChallenge.lanchonete.core.applications.ports.interfaces.PedidoServicePort;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.ProdutoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class ProdutoController implements ControllerInterface<ProdutoDTO, Produt
 
 
     private final ProdutoServicePort produtoServicePort;
+    private final PedidoServicePort pedidoServicePort;
 
 
     @Override
@@ -86,8 +88,21 @@ public class ProdutoController implements ControllerInterface<ProdutoDTO, Produt
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")Long id) {
-        if (produtoServicePort.delete(id)) {
-            return ResponseEntity.ok().build();
+        try {
+
+            if (pedidoServicePort.pedidoEmAbertoComProduto(id))
+                throw new IllegalStateException("Não se pode apagar um Produto que esteja em uso em um pedido em Aberto não Finalzado");
+
+
+            if (produtoServicePort.delete(id)) {
+                return ResponseEntity.ok().build();
+            }
+        }
+        catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro conflito de regra!!  "+ e.getMessage()); // -> erro de conflito, (409)
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

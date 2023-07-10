@@ -55,4 +55,16 @@ public class PedidoRepository implements PedidoRepositoryPort {
     public List<Pedido> findPedidoByStatus(StatusPedido statusPedido) {
         return pedidoMapper.toModelList(pedidoRepositoryJpa.findPedidoByStatus(statusPedido));
     }
+
+    @Override
+    public List<Pedido> findPedidoByClienteEmAberto(Long idCliente) {
+        return pedidoMapper.toModelList(pedidoRepositoryJpa.findPedidoByClienteEmAberto(idCliente));
+    }
+
+    @Override
+    public List<Pedido> findPedidoByProdutoEmAberto(Long idProduto) {
+        return pedidoMapper.toModelList(pedidoRepositoryJpa.findPedidoByProdutoEmAberto(idProduto));
+    }
+
+
 }

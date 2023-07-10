@@ -10,4 +10,8 @@ public interface PedidoRepositoryPort extends RepositoryInterface<Pedido, Long, 
 
     List<Pedido> findPedidoByStatus(StatusPedido statusPedido);
 
+    List<Pedido> findPedidoByClienteEmAberto(Long idCliente);
+
+    List<Pedido> findPedidoByProdutoEmAberto(Long idProduto);
+
 }

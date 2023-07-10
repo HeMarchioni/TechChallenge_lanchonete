@@ -3,6 +3,7 @@ package com.techChallenge.lanchonete.adapter.controller;
 import com.techChallenge.lanchonete.core.applications.dtos.in.BuscaCpfEmailDTO;
 import com.techChallenge.lanchonete.core.applications.dtos.in.ClienteDTO;
 import com.techChallenge.lanchonete.core.applications.ports.interfaces.ClienteServicePort;
+import com.techChallenge.lanchonete.core.applications.ports.interfaces.PedidoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class ClienteController implements ControllerInterface<ClienteDTO, Client
 
 
     private final ClienteServicePort clienteServicePort;
+    private final PedidoServicePort pedidoServicePort;
 
 
     @Override
@@ -66,9 +68,23 @@ public class ClienteController implements ControllerInterface<ClienteDTO, Client
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")Long id) {
-        if (clienteServicePort.delete(id)) {
-            return ResponseEntity.ok().build();
-        }
+
+       try {
+
+           if (pedidoServicePort.pedidosClienteEmAberto(id))
+               throw new IllegalStateException("Não se pode apagar um cliente com um pedido em Aberto nao Finalzado");
+
+
+           if (clienteServicePort.delete(id)) {
+               return ResponseEntity.ok().build();
+           }
+       }
+        catch (IllegalStateException e) {
+               return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro conflito de regra!!  "+ e.getMessage()); // -> erro de conflito, (409)
+           }
+        catch (Exception e) {
+               return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro na Solicitação!!  "+ e.getMessage()); // -> erro em geral, se mandar json errado (400)
+           }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 

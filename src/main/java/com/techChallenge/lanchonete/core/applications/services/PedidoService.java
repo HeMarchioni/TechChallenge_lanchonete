@@ -192,6 +192,17 @@ public class PedidoService implements PedidoServicePort {
         return false;
     }
 
+
+    public boolean pedidosClienteEmAberto (Long id){
+        List<Pedido> pedidosDoBanco = pedidoRepositoryPort.findPedidoByClienteEmAberto(id);
+        return pedidosDoBanco.size() != 0;
+    }
+
+    public boolean pedidoEmAbertoComProduto (Long id){
+        List<Pedido> pedidosDoBanco = pedidoRepositoryPort.findPedidoByProdutoEmAberto(id);
+        return pedidosDoBanco.size() != 0;
+    }
+
     private void rotinaVerificacaoStatusPreparacao(){
 
         List<Pedido> pedidosEmPreparacao = pedidoRepositoryPort.findPedidoByStatus(StatusPedido.PREPARACAO);

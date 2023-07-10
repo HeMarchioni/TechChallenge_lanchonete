@@ -19,5 +19,9 @@ public interface PedidoServicePort extends ServiceInterface<PedidoDTO, PedidoOut
 
     boolean alteraStatusPedidoFinalizado (Long id);
 
+    boolean pedidosClienteEmAberto (Long id);
+
+    boolean pedidoEmAbertoComProduto (Long id);
+
 
 }

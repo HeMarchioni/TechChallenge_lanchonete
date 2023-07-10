@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +20,7 @@ public class PedidoEntity extends AbstractEntity{
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "cliente_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private ClienteEntity cliente;
 
     @ManyToMany
@@ -26,6 +29,7 @@ public class PedidoEntity extends AbstractEntity{
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private List<ProdutoEntity> listaProduto;
 
     @Column(name = "ds_observacao",length = 300)
