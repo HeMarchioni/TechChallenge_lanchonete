@@ -1,14 +1,14 @@
 package com.techChallenge.lanchonete;
 
 
-import com.techChallenge.lanchonete.core.applications.Enum.CategoriaProduto;
-import com.techChallenge.lanchonete.core.applications.dtos.in.ClienteDTO;
-import com.techChallenge.lanchonete.core.applications.dtos.in.PedidoDTO;
-import com.techChallenge.lanchonete.core.applications.dtos.in.ProdutoDTO;
-import com.techChallenge.lanchonete.core.applications.dtos.out.PedidoOutDTO;
-import com.techChallenge.lanchonete.core.applications.ports.interfaces.ClienteServicePort;
-import com.techChallenge.lanchonete.core.applications.ports.interfaces.PedidoServicePort;
-import com.techChallenge.lanchonete.core.applications.ports.interfaces.ProdutoServicePort;
+import com.techChallenge.lanchonete.usecases.produto.CategoriaProduto;
+import com.techChallenge.lanchonete.usecases.cliente.ClienteDTO;
+import com.techChallenge.lanchonete.usecases.pedido.PedidoDTO;
+import com.techChallenge.lanchonete.usecases.produto.ProdutoDTO;
+import com.techChallenge.lanchonete.usecases.pedido.PedidoOutDTO;
+import com.techChallenge.lanchonete.usecases.cliente.ClienteUseCasePort;
+import com.techChallenge.lanchonete.usecases.pedido.PedidoUseCasePort;
+import com.techChallenge.lanchonete.usecases.produto.ProdutoUseCasePort;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,9 +24,9 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class Populate implements CommandLineRunner {
 
-    private final ProdutoServicePort produtoRepository;
-    private final ClienteServicePort clienteRepository;
-    private final PedidoServicePort pedidoServicePort;
+    private final ProdutoUseCasePort produtoRepository;
+    private final ClienteUseCasePort clienteRepository;
+    private final PedidoUseCasePort pedidoServicePort;
 
     public boolean insertProdutos() {
         try {
