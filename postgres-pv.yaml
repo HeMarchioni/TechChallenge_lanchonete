@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+spec:
+  capacity:
+    storage: 1Gi  # tamanho do volume
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce  # modo de acesso ao volume
+  persistentVolumeReclaimPolicy: Retain  # política de retenção do volume após ser liberado
+  storageClassName: manual
+  hostPath:
+    path: "/data/postgres"  # caminho no nó do cluster onde o volume será montado
