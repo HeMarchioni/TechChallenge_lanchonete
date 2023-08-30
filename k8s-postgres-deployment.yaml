@@ -21,10 +21,19 @@ spec:
           env:
             - name: POSTGRES_DB
               value: dataBaseLanchonete
+
             - name: POSTGRES_USER
-              value: myuser
+              valueFrom:
+                secretKeyRef:
+                  name: lanchonete-secrets
+                  key: username
+
             - name: POSTGRES_PASSWORD
-              value: secret
+              valueFrom:
+                secretKeyRef:
+                  name: lanchonete-secrets
+                  key: password
+
           ports:
             - containerPort: 5432
           volumeMounts:

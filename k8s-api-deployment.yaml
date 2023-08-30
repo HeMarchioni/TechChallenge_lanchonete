@@ -20,7 +20,15 @@ spec:
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres-service:5432/dataBaseLanchonete
-            - name: SPRING_DATASOURCE_USERNAME
-              value: myuser
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: secret
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: lanchonete-secrets
+                  key: username
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lanchonete-secrets
+                  key: password
