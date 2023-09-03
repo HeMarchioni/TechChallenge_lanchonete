@@ -14,7 +14,8 @@ spec:
     spec:
       volumes:
         - name: postgres-data
-          # Adicionar informações sobre o volume persistente, se necessário
+          persistentVolumeClaim:
+            claimName: postgres-pvc
       containers:
         - name: postgres
           image: postgres:latest
