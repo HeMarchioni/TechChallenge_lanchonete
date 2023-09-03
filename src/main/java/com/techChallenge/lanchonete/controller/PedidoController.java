@@ -24,9 +24,14 @@ public class PedidoController implements ControllerInterface<PedidoDTO, PedidoOu
 
 
     @Override
-    @GetMapping
+    @GetMapping("/lista-todos")
     public ResponseEntity<List<PedidoOutDTO>> getAll() {
         return ResponseEntity.ok(pedidoUseCasePort.findAll());
+    }
+
+    @GetMapping("/lista-prioridade")
+    public ResponseEntity<List<PedidoOutDTO>> getListaPrioridade() {
+        return ResponseEntity.ok(pedidoUseCasePort.getListaPrioridade());
     }
 
     @Override

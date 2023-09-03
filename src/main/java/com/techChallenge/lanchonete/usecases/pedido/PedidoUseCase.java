@@ -131,6 +131,17 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
 
     @Override
+    public List<PedidoOutDTO> getListaPrioridade() {
+
+        List<Pedido> todosOsPedidos = new ArrayList<>();
+        todosOsPedidos.addAll(pedidoRepositoryPort.findPedidoByStatus(StatusPedido.PRONTO));
+        todosOsPedidos.addAll(pedidoRepositoryPort.findPedidoByStatus(StatusPedido.PREPARACAO));
+        todosOsPedidos.addAll(pedidoRepositoryPort.findPedidoByStatus(StatusPedido.RECEBIDO));
+
+        return pedidoMapper.toOutDTOList(todosOsPedidos);
+    }
+
+    @Override
     public void pagamentoPedidoConfirmado(ConfirmacaoPagamentoDTO confirmacaoPagamentoDTO) {
 
         Pedido pedido = pedidoRepositoryPort.findById(Long.valueOf(confirmacaoPagamentoDTO.getExternalReference()));
@@ -144,7 +155,7 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
         }catch (Exception e){
             e.printStackTrace();
-            // Possivel LOG ou sistema de monitoramento. Webhooks para informar a tela pagamento aprovado.
+            // Possivel ‘LOG’ ou sistema de monitoramento. Webhooks para informar a tela pagamento aprovado.
         }
         this.rotinaVerificacaoStatusPreparacao();
     }
@@ -167,7 +178,7 @@ public class PedidoUseCase implements PedidoUseCasePort {
             pedidoDoBanco.setStatusPedido(StatusPedido.PRONTO);
             pedidoRepositoryPort.save(pedidoDoBanco);
             rotinaVerificacaoStatusPreparacao();
-            // Possivel LOG ou sistema de monitoramento. Webhooks para informar a tela pedido Pronto.
+            // Possivel ‘LOG’ ou sistema de monitoramento. Webhooks para informar a tela pedido Pronto.
             return true;
         }
         return false;
@@ -192,12 +203,12 @@ public class PedidoUseCase implements PedidoUseCasePort {
 
     public boolean pedidosClienteEmAberto (Long id){
         List<Pedido> pedidosDoBanco = pedidoRepositoryPort.findPedidoByClienteEmAberto(id);
-        return pedidosDoBanco.size() != 0;
+        return !pedidosDoBanco.isEmpty();
     }
 
     public boolean pedidoEmAbertoComProduto (Long id){
         List<Pedido> pedidosDoBanco = pedidoRepositoryPort.findPedidoByProdutoEmAberto(id);
-        return pedidosDoBanco.size() != 0;
+        return !pedidosDoBanco.isEmpty();
     }
 
     private void rotinaVerificacaoStatusPreparacao(){
