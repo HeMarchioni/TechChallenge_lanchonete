@@ -21,7 +21,7 @@ public class PagamentoController {
     @PostMapping("/notificacoes/pagamento")
     public ResponseEntity<Void> receberNotificacaoPagamento(@RequestBody ConfirmacaoPagamentoDTO ConfirmacaoPagamentoDTO) {
 
-        pedidoUseCasePort.pagamentoPedidoConfirmado(ConfirmacaoPagamentoDTO);
+        if("approved".equals(ConfirmacaoPagamentoDTO.getStatus())){pedidoUseCasePort.pagamentoPedidoConfirmado(ConfirmacaoPagamentoDTO); }
 
         return ResponseEntity.ok().build();
     }
