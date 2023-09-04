@@ -137,14 +137,14 @@ Content-Type: application/json
   "observacao": "Observação do Pedido"
 }
 ```
-<font color=LightCoral>**Fase 2 -> Checkout do Pedido:**</font> 
+:red_circle:**Fase 2 -> Checkout do Pedido:**
  após a criação do pedido, ira retornar os dados sobre o pedido com seu id e QrCode para pagamento.
 
 **Fluxo de Pedido / Pagamento:**
 Assim que o pedido é criado, o status do Pedido é definido como <b>AGUARDANDO_PAGAMENTO</b>.<br>Em seguida, é feita uma requisição para uma API de pagamento (simulação), que retorna um `qr_data` com o código para gerar um QR code.
 
 
-<font color=LightCoral>**Fase 2 -> Webhook para receber confirmação de pagamento aprovado ou pagamento recusado.**</font>
+:red_circle:**Fase 2 -> Webhook para receber confirmação de pagamento aprovado ou pagamento recusado.**
 
 Após o pagamento ser realizado, a notificação é recebida na rota `http://localhost:8080/notificacoes/pagamento`, onde o status do pedido é atualizado para RECEBIDO se o pagamento for aprovado e entra na fila.
 
@@ -153,7 +153,7 @@ Após o pagamento ser realizado, a notificação é recebida na rota `http://loc
 Quando um pedido é <b>FINALIZADO</b>, o próximo pedido na fila com status <b>RECEBIDO</b> é movido para <b>PREPARACAO</b>.
 
 
-<font color=LightCoral>**Fase 2 -> Atualizar o status do pedido:**</font>
+:red_circle:**Fase 2 -> Atualizar o status do pedido:**
 aguarando pagamento para recebido e feito de forma automatica apos pagamento.
 Para os outros Status utilizar as rotas abaixo, Pedido Pronto e Pedido Finalizado.
 
@@ -182,7 +182,7 @@ Retorna todos os pedidos.
 
 ### Listar os pedidos por Prioridade
 
-<font color=LightCoral>**Fase 2 ->  A lista de pedidos deverá retornar os pedidos com suas descrições, ordenados por recebimento e por status com a seguinte 						prioridade: Pronto > Em Preparação > Recebido; Pedidos com status Finalizado não devem aparecer na lista.:**</font>
+:red_circle:**Fase 2 ->  A lista de pedidos deverá retornar os pedidos com suas descrições, ordenados por recebimento e por status com a seguinte prioridade: Pronto > Em Preparação > Recebido; Pedidos com status Finalizado não devem aparecer na lista.:**
 
 Método: GET
 Rota: http://localhost:8080/pedido/listar-prioridade
@@ -195,7 +195,7 @@ Retorna os pedidos por ordem de prioridade Pronto > Preparação > Recebido e or
 Método: GET
 Rota: http://localhost:8080/pedido/{id}
 
-<font color=LightCoral>**Fase 2 -> Consultar status de pagamento do pedido, que informa se o pagamento foi aprovado ou não.:**</font> 
+:red_circle:**Fase 2 -> Consultar status de pagamento do pedido, que informa se o pagamento foi aprovado ou não.:**
 
 Ao passar o ID do pedido retorna as informações do mesmo  
 sendo possivel ver o status do mesmo, se foi pago ou não em qual situação se encontra.
