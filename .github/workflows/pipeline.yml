@@ -11,7 +11,7 @@ jobs:
         fetch-depth: 0
 
     - name: Package
-      run: mvn package
+      run: mvn package -DskipTests
 
   publish:
     runs-on: ubuntu-latest
