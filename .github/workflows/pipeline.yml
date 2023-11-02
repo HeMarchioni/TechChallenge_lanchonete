@@ -19,7 +19,7 @@ jobs:
         docker build -t my-java-app .
         docker run --rm -v $(pwd):/app my-java-app mvn dependency:go-offline -B
         docker run --rm -v $(pwd):/app my-java-app mvn package -DskipTests
-      working-directory: ./ 
+      working-directory: ./TechChallenge_lanchonete/src/main/java/com/techChallenge/lanchonete
 
   publish:
     runs-on: ubuntu-latest
