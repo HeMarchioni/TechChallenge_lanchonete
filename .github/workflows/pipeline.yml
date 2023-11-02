@@ -11,7 +11,7 @@ jobs:
         fetch-depth: 0
 
     - name: Get Packages
-      run: mvn dependency:go-offiline -B
+      run: mvn dependency:go-offline -B
 
     - name: Build
       run: mvn package -DskipTests
