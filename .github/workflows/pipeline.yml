@@ -10,7 +10,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Package
+    - name: Get Packages
+      run: mvn dependency:go-offiline -B
+
+    - name: Build
       run: mvn package -DskipTests
 
   publish:
