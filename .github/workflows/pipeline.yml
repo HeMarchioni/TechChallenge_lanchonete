@@ -16,8 +16,16 @@ jobs:
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
-        distribuition: 'adopt'
+          java-version: 17
+          distribuition: adopt
+          java-package: jdk
+          architecture: x64
+          check-latest: false
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+          overwrite-settings: true
+          job-status: success
 
     - name: Build and Package
       run: |
@@ -38,8 +46,16 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribuition: 'adopt'
+          java-version: 17
+          distribuition: adopt
+          java-package: jdk
+          architecture: x64
+          check-latest: false
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+          overwrite-settings: true
+          job-status: success
 
       - name: Publish package
         run: |
