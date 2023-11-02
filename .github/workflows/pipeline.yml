@@ -10,11 +10,16 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Get Packages
-      run: mvn dependency:go-offline -B
-
-    - name: Build
-      run: mvn package -DskipTests
+    - name: Start Docker Compose Services
+      run: docker-compose up -d
+      working-directory: ./TechChallenge_lanchonete/src/main/java/com/techChallenge/lanchonete
+  
+    - name: Build with Docker Compose
+      run: |
+        docker build -t my-java-app .
+        docker run --rm -v $(pwd):/app my-java-app mvn dependency:go-offline -B
+        docker run --rm -v $(pwd):/app my-java-app mvn package -DskipTests
+      working-directory: ./ 
 
   publish:
     runs-on: ubuntu-latest
