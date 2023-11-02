@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: '11'
           distribuition: 'adopt'
-          package: '8.jar'
+          package: '*.jar'
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
