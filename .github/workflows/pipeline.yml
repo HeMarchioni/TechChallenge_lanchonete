@@ -22,4 +22,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Deploy Docker Container
-        run: docker run -d -p 8080:8080 my-docker-app
+        shell: bash
+        run: |
+          echo "Published"
+
+  deploy-main:
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    needs: publish
+
+    if: github.ref == 'reefs/head/stage'
+    steps:
+      - name: Deploy
+        shell: bash
+        run: |
+          echo "Deploy MAIN"
+    
