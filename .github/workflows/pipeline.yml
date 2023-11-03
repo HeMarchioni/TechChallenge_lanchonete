@@ -26,7 +26,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Run the Maven verify phase
-        run: mvn --batch-mode --update-snapshots verify
+        run: docker run --rm tech_challenge_lanchonete mvn --batch-mode --update-snapshots verify
   deploy-main:
     runs-on: ubuntu-latest
     environment:
