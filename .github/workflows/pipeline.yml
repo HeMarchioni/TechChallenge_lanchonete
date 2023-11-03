@@ -6,20 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Start Docker Compose Services
-      run: docker-compose up -d
-      working-directory: ./TechChallenge_lanchonete/src/main/java/com/techChallenge/lanchonete
+    - name: Checkout repository
+      uses: actions/checkout@v2
   
-    - name: Build with Docker Compose
-      run: |
-        docker build -t my-java-app .
-        docker run --rm -v $(pwd):/app my-java-app mvn dependency:go-offline -B
-        docker run --rm -v $(pwd):/app my-java-app mvn package -DskipTests
-      working-directory: ./TechChallenge_lanchonete/src/main/java/com/techChallenge/lanchonete
+    - name: Build Docker Image
+      run: docker build -t tech_challenge_lanchonete .
+      working-directory: ./
 
   publish:
     runs-on: ubuntu-latest
